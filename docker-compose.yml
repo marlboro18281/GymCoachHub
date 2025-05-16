@@ -1,27 +1,18 @@
 services:
  apache:
-  image: php:8.1-apache
+  build:
+   context: .
+   dockerfile: docker/apache/Dockerfile
   container_name: diplom_apache
   ports:
    - "8081:80"
   volumes:
    - .:/var/www/html
-   - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+   - ./docker/apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
   depends_on:
    - mysql
   networks:
    - app-network
-  environment:
-   - TZ=Europe/Kyiv
-  command: >
-   bash -c "apt-get update &&
-            apt-get install -y libfreetype6-dev libpng-dev libjpeg-dev zip unzip &&
-            docker-php-ext-configure gd --with-freetype --with-jpeg &&
-            docker-php-ext-install gd pdo pdo_mysql mysqli &&
-            a2enmod rewrite &&
-            apt-get clean &&
-            rm -rf /var/lib/apt/lists/* &&
-            apache2-foreground"
   restart: always
 
  mysql:
