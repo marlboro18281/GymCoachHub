@@ -1,20 +1,25 @@
 <?php
-// Включаємо відображення помилок для розробки (прибрати в продакшені)
+// Start output buffering and session at the very beginning
+ob_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Enable error reporting for development (disable in production)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Запускаємо сесію
-session_start();
-
-// Підключення до бази даних
+// Connect to the database
 //$mysqli = new mysqli("localhost", "root", "", "db_sport");
-//Підключення до бази docker
+// Docker database connection
 $mysqli = new mysqli("mysql", "root", "rootpassword", "db_sport");
 if ($mysqli->connect_errno) {
     header("Content-Type: application/json; charset=utf-8");
-    die(json_encode(["status" => "error", "message" => "Помилка підключення до БД: " . $mysqli->connect_error], JSON_UNESCAPED_UNICODE));
+    echo json_encode(["status" => "error", "message" => "Помилка підключення до БД: " . $mysqli->connect_error], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
-// Встановлюємо кодування
+// Set the character encoding
 $mysqli->set_charset("utf8mb4");
+?>

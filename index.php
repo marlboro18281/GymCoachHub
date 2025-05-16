@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'src/components/config.php';
 $page_title = "Online Coach";
 ?>

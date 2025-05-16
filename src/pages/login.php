@@ -1,6 +1,6 @@
 <?php
 require '../components/config.php';
-ob_start();
+
 
 // Перевірка, чи користувач уже авторизований
 if (isset($_SESSION['user_number'])) {
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-ob_end_flush();
+
 $page_title = "Вхід";
 ?>
 <?php include '../components/header.php'; ?>

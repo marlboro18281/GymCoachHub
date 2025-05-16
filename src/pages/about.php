@@ -1,8 +1,8 @@
-﻿<?php
-require '../components/config.php';
-ob_start();
+<?php
+include '../components/auth_check.php';
+
 $username = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') : null;
-ob_end_flush();
+
 $page_title = "Про нас | Online Coach";
 ?>
 <?php include '../components/header.php'; ?>

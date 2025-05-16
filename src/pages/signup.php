@@ -1,6 +1,6 @@
 <?php
 require '../components/config.php';
-ob_start();
+
 
 // Перевірка, чи користувач уже авторизований
 if (isset($_SESSION['user_number'])) {
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     }
 }
 
-ob_end_flush();
+
 $page_title = "Реєстрація";
 ?>
 <?php include '../components/header.php'; ?>
