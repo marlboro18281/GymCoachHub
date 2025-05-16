@@ -1,0 +1,65 @@
+services:
+ apache:
+  image: php:8.1-apache
+  container_name: diplom_apache
+  ports:
+   - "8081:80"
+  volumes:
+   - .:/var/www/html
+   - ./apache/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+  depends_on:
+   - mysql
+  networks:
+   - app-network
+  environment:
+   - TZ=Europe/Kyiv
+  command: >
+   bash -c "apt-get update &&
+            apt-get install -y libfreetype6-dev libpng-dev libjpeg-dev zip unzip &&
+            docker-php-ext-configure gd --with-freetype --with-jpeg &&
+            docker-php-ext-install gd pdo pdo_mysql mysqli &&
+            a2enmod rewrite &&
+            apt-get clean &&
+            rm -rf /var/lib/apt/lists/* &&
+            apache2-foreground"
+  restart: always
+
+ mysql:
+  image: mysql:8.0
+  container_name: diplom_mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: rootpassword
+   MYSQL_DATABASE: db_sport
+   MYSQL_USER: dbuser
+   MYSQL_PASSWORD: rootpassword
+  ports:
+   - "3306:3306"
+  volumes:
+   - mysql-data:/var/lib/mysql
+   - ./docker/mysql/init:/docker-entrypoint-initdb.d
+  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+  networks:
+   - app-network
+  restart: always
+
+ phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: diplom_phpmyadmin
+  environment:
+   PMA_HOST: mysql
+   PMA_USER: root
+   PMA_PASSWORD: rootpassword
+  ports:
+   - "8080:80"
+  depends_on:
+   - mysql
+  networks:
+   - app-network
+  restart: always
+
+volumes:
+ mysql-data:
+
+networks:
+ app-network:
+  driver: bridge
