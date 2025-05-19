@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/styles/style.css">
     <?php if (isset($include_main_js)): ?>
-        <script src="../js/main.js" defer></script>
+        <script src="/src/js/main.js" defer></script>
+        <script src="/src/js/youtube-player.js" defer></script>
     <?php endif; ?>
 </head>
 <body>
