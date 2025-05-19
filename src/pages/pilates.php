@@ -31,11 +31,15 @@
 
                         <section class="pilates">
                             <?php
+                            // Запит до бази даних для отримання всіх вправ пілатесу
                             $sql = "SELECT * FROM pilates_data ORDER BY id ASC";
                             $result = $mysqli->query($sql);
 
+                            // Перевіряємо, чи є результати
                             if ($result->num_rows > 0) {
+                                // Виводимо кожну вправу у вигляді посилання з картинкою та назвою
                                 while ($row = $result->fetch_assoc()) {
+                                    // Якщо є посилання на відео, додаємо атрибут data-movie
                                     $dataMovie = $row['movie'] ? 'data-movie="' . $row['movie'] . '"' : '';
                                     echo '<a href="#" data-id="' . $row['data_id'] . '" ' . $dataMovie . ' class="pilates-link">';
                                     echo '<img src="' . $row['img'] . '" alt="' . $row['title'] . '">';
@@ -43,6 +47,7 @@
                                     echo '</a>';
                                 }
                             } else {
+                                // Якщо вправ немає — показуємо відповідне повідомлення
                                 echo '<p>Немає доступних вправ</p>';
                             }
                             ?>
