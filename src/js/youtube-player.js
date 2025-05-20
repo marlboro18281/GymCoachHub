@@ -1,7 +1,7 @@
 // Додаємо обробник події, коли весь DOM завантажено
 document.addEventListener('DOMContentLoaded', function() {
     // Знаходимо всі посилання з класом .pilates-link
-    const links = document.querySelectorAll('.pilates-link');
+ const links = document.querySelectorAll('.pilates-link, .yoga-link, .fitness-link');
     // Знаходимо елемент модального вікна
     const modal = document.querySelector('#modal-movie');
     // Знаходимо контейнер для контенту модального вікна
