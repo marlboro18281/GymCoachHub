@@ -1,3 +1,25 @@
+-- Таблиця базових фізичних параметрів користувача
+CREATE TABLE IF NOT EXISTS user_base_metrics (
+                                                 id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
+                                                 user_id INT NOT NULL COMMENT 'Ідентифікатор користувача',
+                                                 weight DECIMAL(5,2) NOT NULL COMMENT 'Базова вага користувача (кг)',
+    height INT NOT NULL COMMENT 'Зріст користувача (см)',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата створення запису',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата оновлення запису',
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT uk_user_base_metrics UNIQUE (user_id)
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання базових фізичних параметрів користувача';
+
+-- Таблиця історії змін фізичних параметрів користувача
+CREATE TABLE IF NOT EXISTS user_metrics_history (
+                                                    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
+                                                    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача',
+                                                    weight DECIMAL(5,2) NOT NULL COMMENT 'Вага користувача (кг)',
+    height INT NOT NULL COMMENT 'Зріст користувача (см)',
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата запису',
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання історії змін фізичних параметрів користувача';
+
 -- Таблиця users: інформація про користувачів
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор користувача',

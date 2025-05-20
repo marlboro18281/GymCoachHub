@@ -33,19 +33,152 @@ if ($stmt) {
     </header>
 
     <main class="container">
-        <section class="profile-container">
-            <div class="info-box">
-                <h2>Інформація</h2>
-                <label>Вага (кг): <input type="number" id="weight" min="0" step="0.1"></label>
-                <label>Зріст (см): <input type="number" id="height" min="0"></label>
-                <button id="update-btn">Оновити</button>
+        <main class="container">
+            <section class="profile-container">
+                <div class="info-box">
+                    <h2>Базова інформація</h2>
+                    <?php
+                    require_once '../components/metrics_functions.php';
+
+                    // Отримання базових метрик користувача
+                    $base_metrics = getUserBaseMetrics($mysqli, $user_id);
+
+                    // Отримання останнього запису історії
+                    $history = getUserMetricsHistory($mysqli, $user_id, 1);
+                    $current_metrics = !empty($history) ? $history[0] : null;
+
+                    // Розрахунок різниці метрик
+                    $diff = null;
+                    if ($base_metrics && $current_metrics) {
+                        $diff = calculateMetricsDifference($current_metrics, $base_metrics);
+                    }
+                    ?>
+
+                    <div class="metrics-container">
+                        <div class="base-metrics">
+                            <h3>Базові показники</h3>
+                            <?php if ($base_metrics): ?>
+                                <div class="metric-item">
+                                    <span class="metric-label">Вага:</span>
+                                    <span class="metric-value"><span id="base-weight"><?= htmlspecialchars($base_metrics['weight']) ?></span> кг</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Зріст:</span>
+                                    <span class="metric-value"><span id="base-height"><?= htmlspecialchars($base_metrics['height']) ?></span> см</span>
+                                </div>
+                                <button id="base-metrics-btn" class="btn-secondary">Змінити базові показники</button>
+                            <?php else: ?>
+                                <p class="no-data">Базові показники не встановлені</p>
+                                <button id="base-metrics-btn" class="btn-primary">Встановити базові показники</button>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="current-metrics">
+                            <h3>Поточні показники</h3>
+                            <?php if ($current_metrics): ?>
+                                <div class="metric-item">
+                                    <span class="metric-label">Вага:</span>
+                                    <span class="metric-value">
+                                <?= htmlspecialchars($current_metrics['weight']) ?> кг
+                                <?php if ($diff): ?>
+                                    <span id="weight-diff" class="<?= $diff['weight'] > 0 ? 'increased' : ($diff['weight'] < 0 ? 'decreased' : '') ?>">
+                                        <?= $diff['weight'] > 0 ? '+' . $diff['weight'] : $diff['weight'] ?>
+                                    </span>
+                                <?php endif; ?>
+                            </span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Зріст:</span>
+                                    <span class="metric-value">
+                                <?= htmlspecialchars($current_metrics['height']) ?> см
+                                <?php if ($diff): ?>
+                                    <span id="height-diff" class="<?= $diff['height'] > 0 ? 'increased' : ($diff['height'] < 0 ? 'decreased' : '') ?>">
+                                        <?= $diff['height'] > 0 ? '+' . $diff['height'] : $diff['height'] ?>
+                                    </span>
+                                <?php endif; ?>
+                            </span>
+                                </div>
+                                <p class="recorded-at">Записано: <?= date('d.m.Y H:i', strtotime($current_metrics['recorded_at'])) ?></p>
+                            <?php else: ?>
+                                <p class="no-data">Поточні показники не записані</p>
+                            <?php endif; ?>
+                            <button id="update-btn" class="btn-primary">Оновити показники</button>
+                        </div>
+                    </div>
+                </div>
+
+                <img src="/src/images/ball.jpg" class="profile-img" alt="Профільне зображення">
+
+                <div class="graphic-box">
+                    <h3>Графік прогресу</h3>
+                    <!-- Canvas для графіка з Chart.js -->
+                    <canvas id="progressChart"></canvas>
+
+                    <!-- Таблиця з історією метрик -->
+                    <div class="metrics-history">
+                        <h4>Історія змін</h4>
+                        <div class="table-responsive">
+                            <table class="metrics-table" id="metrics-table">
+                                <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Вага</th>
+                                    <th>Зріст</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $full_history = getUserMetricsHistory($mysqli, $user_id);
+                                if (!empty($full_history)):
+                                    foreach ($full_history as $record):
+                                        ?>
+                                        <tr>
+                                            <td><?= date('d.m.Y H:i', strtotime($record['recorded_at'])) ?></td>
+                                            <td><?= htmlspecialchars($record['weight']) ?> кг</td>
+                                            <td><?= htmlspecialchars($record['height']) ?> см</td>
+                                        </tr>
+                                    <?php
+                                    endforeach;
+                                else:
+                                    ?>
+                                    <tr>
+                                        <td colspan="3" class="no-data">Немає записів в історії</td>
+                                    </tr>
+                                <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Модальне вікно для додавання/оновлення метрик -->
+            <div id="metrics-modal" class="modal">
+                <div class="modal-content">
+                    <span id="modal-close" class="close">&times;</span>
+                    <h2 id="modal-title">Оновлення показників</h2>
+                    <form id="metrics-form" data-is-base="false">
+                        <div class="form-group">
+                            <label for="weight">Вага (кг):</label>
+                            <input type="number" id="weight" name="weight" min="0" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Зріст (см):</label>
+                            <input type="number" id="height" name="height" min="0" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Зберегти</button>
+                    </form>
+                </div>
             </div>
-            <img src="/src/images/ball.jpg" class="profile-img" alt="Профільне зображення">
-            <div class="graphic-box">
-                <h3>Графік прогресу</h3>
-                <canvas id="progressChart"></canvas>
-            </div>
-        </section>
+
+            <!-- Елемент для відображення повідомлень -->
+            <div id="message" class="message" style="display: none;"></div>
+
+            <!-- Підключення Chart.js для графіків -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <!-- Підключення скрипту для метрик -->
+            <script src="/src/js/metrics.js"></script>
+
 
         <section class="trainings">
             <h2>Ваші тренування</h2>

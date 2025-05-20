@@ -10,6 +10,10 @@
         <script src="/src/js/main.js" defer></script>
         <script src="/src/js/youtube-player.js" defer></script>
     <?php endif; ?>
+
+    <?php if (strpos($_SERVER['REQUEST_URI'], 'my-profile.php') !== false): ?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <?php endif; ?>
 </head>
 <body>
 <div class="navbar-bg"></div>
