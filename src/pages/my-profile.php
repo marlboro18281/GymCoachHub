@@ -133,8 +133,8 @@ if ($stmt) {
                                 <?php
                                 // Перебираємо всі дані по фітнесу
                                 foreach ($fitness_data as $key => $value):
-                                    // Пропускаємо id та user_id, а також порожні значення
-                                    if ($key != 'id' && $key != 'user_id' && $value > 0): ?>
+                                    // Пропускаємо id та user_id
+                                    if ($key != 'id' && $key != 'user_id'): ?>
                                         <tr>
                                             <!-- Виводимо назву вправи або ключ, якщо назви немає -->
                                             <td><?= isset($fitness_titles[$key]) ? $fitness_titles[$key] : $key ?></td>
@@ -169,8 +169,8 @@ if ($stmt) {
                                 <?php
                                 // Перебираємо всі дані по силовим тренуванням
                                 foreach ($hardwork_data as $key => $value):
-                                    // Пропускаємо id та user_id, а також порожні значення
-                                    if ($key != 'id' && $key != 'user_id' && $value > 0): ?>
+                                    // Пропускаємо id та user_id
+                                    if ($key != 'id' && $key != 'user_id' ): ?>
                                         <tr>
                                             <!-- Виводимо назву вправи або ключ, якщо назви немає -->
                                             <td><?= isset($hardwork_titles[$key]) ? $hardwork_titles[$key] : $key ?></td>
@@ -205,8 +205,8 @@ if ($stmt) {
                                 <?php
                                 // Перебираємо всі дані по пілатесу
                                 foreach ($pilates_data as $key => $value):
-                                    // Пропускаємо id та user_id, а також порожні значення
-                                    if ($key != 'id' && $key != 'user_id' && $value > 0): ?>
+                                    // Пропускаємо id та user_id
+                                    if ($key != 'id' && $key != 'user_id'): ?>
                                         <tr>
                                             <!-- Виводимо назву вправи або ключ, якщо назви немає -->
                                             <td><?= isset($pilates_titles[$key]) ? $pilates_titles[$key] : $key ?></td>
