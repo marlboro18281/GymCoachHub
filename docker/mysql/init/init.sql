@@ -490,3 +490,51 @@ VALUES ('lunges_forward', '/src/images/lunge(fit).jpg', 'Випади впере
         'https://youtu.be/kLh-uczlPLg?si=4uMhJFeEIoi-oXgh'),
        ('high_knee_run', '/src/images/highknees(fit).jpg', 'Біг із високим підніманням колін',
         'https://youtu.be/FvjmPRU3zn4?si=Sk6hwFpb9NEcnCe4');
+
+CREATE TABLE `hardwork_data`
+(
+    `id`         INT AUTO_INCREMENT PRIMARY KEY,
+    `data_id`    VARCHAR(50)  NOT NULL,
+    `img`        VARCHAR(255) NOT NULL,
+    `title`      VARCHAR(255) NOT NULL,
+    `movie`      VARCHAR(255) DEFAULT NULL,
+    `link`       VARCHAR(255) DEFAULT NULL,
+    `created_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Вправи силових тренувань для відображення на сторінці';
+
+INSERT INTO `hardwork_data` (`data_id`, `img`, `title`, `movie`)
+VALUES ('back_extension', '/src/images/back_extension.jpg', 'Екстензія спини',
+        'https://youtu.be/ENXyYltB7CM?si=GjXlC5eFnl64kJz4'),
+       ('t_bar_row', '/src/images/t_bar_row.jpg', 'Т-тяга', 'https://youtu.be/TyLoy3n_a10?si=l4LA_5gs50ZsBXJL'),
+       ('dumbbell_row', '/src/images/dumbbell_row.jpg', 'Тяга з гантеллю',
+        'https://youtu.be/Ch4UZW_j08Q?si=v5ZWcqFCP0f8RQ_K'),
+       ('seated_row', '/src/images/seated_row.jpg', 'Тяга сидячи', 'https://youtu.be/hUV6XDtNTLU?si=DB7MKID0jYYHObPd'),
+       ('barbell_row', '/src/images/barbell_row.jpg', 'Тяга штанги',
+        'https://youtu.be/D3E6BEuROfM?si=U1Qf96zvoc_TbIcr'),
+       ('barbell_upright_row', '/src/images/barbell_upright_row.jpg', 'Тяга штанги до підборіддя',
+        'https://youtu.be/ayFFc1N54SA?si=LuTwlmWFXIWhC6k7'),
+       ('stationary_bike', '/src/images/stationary_bike.jpg', 'Біг на велотренажері',
+        'https://youtu.be/rEqRmKAQ5xM?si=-KtFfCZdU27d2rYq'),
+       ('barbell_lunges', '/src/images/barbell_lunges.jpg', 'Випади зі штангою',
+        'https://youtu.be/P5J-131KYiU?si=tN0s8RvghRz_Y8Qh'),
+       ('leg_extension', '/src/images/leg_extension.jpg', 'Розгинання ніг',
+        'https://youtu.be/qYxo9ZFvHQE?si=7KKii2q6t8A-KyjJ'),
+       ('crossover_leg_abduction', '/src/images/crossover_leg_abduction.jpg', 'Відведення ніг у кросовері',
+        'https://youtu.be/EHq78mQYLbI?si=DW267bA4UXKyiRmS'),
+       ('barbell_squats', '/src/images/barbell_squats.jpg', 'Присідання зі штангою',
+        'https://youtu.be/Cj7dKDbFA94?si=Rh4kixpagoygQZWb'),
+       ('leg_adduction', '/src/images/leg_adduction.jpg', 'Зведення ніг',
+        'https://youtu.be/e9AqTFMmP18?si=1FuesudT2_9CPbxJ'),
+       ('leg_curl', '/src/images/leg_curl.jpg', 'Згинання ніг', 'https://youtu.be/SiwJ_T62l9c?si=DNp-Mv22fff5lCno'),
+       ('arm_adduction', '/src/images/arm_adduction.jpg', 'Зведення рук',
+        'https://youtu.be/JJaIcqxoUZw?si=3ldCalFbLfvKp4qS'),
+       ('dip_bars', '/src/images/dip_bars.jpg', 'Віджимання на брусах',
+        'https://youtu.be/WNiEv8e9aKU?si=GFSH-RdpZtWeU46C'),
+       ('crossover_arm', '/src/images/crossover_arm.jpg', 'Вправи на кросовері для рук',
+        'https://youtu.be/EsXgqAxVKbA?si=sR_q1Ctf_3TZ5Es-'),
+       ('barbell_bench_press', '/src/images/barbell_bench_press.jpg', 'Жим штанги',
+        'https://youtu.be/Jb2bMaxqnXI?si=VGJpMgEUHzTCtwnJ'),
+       ('dumbbell_bench_press', '/src/images/dumbbell_bench_press.jpg', 'Жим гантель',
+        'https://youtu.be/mXdyLcQ_VZU?si=xTP2ycBZVRUl8Gcg');
