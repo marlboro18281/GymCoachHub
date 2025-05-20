@@ -1,7 +1,18 @@
+-- Таблиця users: інформація про користувачів
+CREATE TABLE IF NOT EXISTS users (
+                                     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор користувача',
+                                     user_name VARCHAR(50) NOT NULL COMMENT 'Імя користувача',
+    surname VARCHAR(50) NOT NULL COMMENT 'Прізвище користувача',
+    phone_number VARCHAR(15) NOT NULL COMMENT 'Номер телефону користувача',
+    age INT NOT NULL CHECK (age >= 12 AND age <= 100) COMMENT 'Вік користувача (12-100 років)',
+    registration_date DATE NOT NULL COMMENT 'Дата реєстрації',
+    CONSTRAINT uk_phone_number UNIQUE (phone_number)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних користувачів';
+
 -- Таблиця user_base_measurements: базові виміри користувача (встановлюються один раз, але можуть редагуватися)
 CREATE TABLE IF NOT EXISTS user_base_measurements (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
-    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (зв'язок з таблицею users)',
+    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (звязок з таблицею users)',
     weight DECIMAL(5,1) NOT NULL COMMENT 'Базова вага користувача (кг)',
     height INT NOT NULL COMMENT 'Базовий зріст користувача (см)',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата створення запису',
@@ -13,29 +24,17 @@ CREATE TABLE IF NOT EXISTS user_base_measurements (
 -- Таблиця user_measurements: історія вимірів ваги та зросту користувача
 CREATE TABLE IF NOT EXISTS user_measurements (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
-    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (зв'язок з таблицею users)',
+    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (звязок з таблицею users)',
     weight DECIMAL(5,1) NOT NULL COMMENT 'Вага користувача (кг)',
     height INT NOT NULL COMMENT 'Зріст користувача (см)',
     measurement_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата і час виміру',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання історії вимірів користувачів';
 
--- Решта вашого початкового SQL коду залишається без змін
--- Таблиця users: інформація про користувачів
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор користувача',
-    user_name VARCHAR(50) NOT NULL COMMENT 'Ім'я користувача',
-    surname VARCHAR(50) NOT NULL COMMENT 'Прізвище користувача',
-    phone_number VARCHAR(15) NOT NULL COMMENT 'Номер телефону користувача',
-    age INT NOT NULL CHECK (age >= 12 AND age <= 100) COMMENT 'Вік користувача (12-100 років)',
-    registration_date DATE NOT NULL COMMENT 'Дата реєстрації',
-    CONSTRAINT uk_phone_number UNIQUE (phone_number)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних користувачів';
-
 -- Таблиця fitness: дані про фітнес-вправи
 CREATE TABLE IF NOT EXISTS fitness (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
-    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (зв'язок з таблицею users)',
+    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (звязок з таблицею users)',
     lunges_forward INT NOT NULL DEFAULT 0 COMMENT 'Кількість випадів вперед',
     plank INT NOT NULL DEFAULT 0 COMMENT 'Час утримання планки (секунди)',
     squats INT NOT NULL DEFAULT 0 COMMENT 'Кількість присідань',
@@ -51,7 +50,7 @@ CREATE TABLE IF NOT EXISTS fitness (
 -- Таблиця hardwork: дані про силові тренування
 CREATE TABLE IF NOT EXISTS hardwork (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
-    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (зв'язок з таблицею users)',
+    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (звязок з таблицею users)',
     back_extension INT NOT NULL DEFAULT 0 COMMENT 'Кількість екстензій спини',
     t_bar_row INT NOT NULL DEFAULT 0 COMMENT 'Кількість Т-тяги',
     dumbbell_row INT NOT NULL DEFAULT 0 COMMENT 'Кількість тяг з гантеллю',
@@ -76,7 +75,7 @@ CREATE TABLE IF NOT EXISTS hardwork (
 -- Таблиця pilates: дані про заняття пілатесом
 CREATE TABLE IF NOT EXISTS pilates (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор запису',
-    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (зв'язок з таблицею users)',
+    user_id INT NOT NULL COMMENT 'Ідентифікатор користувача (звязок з таблицею users)',
     spine_stretch INT NOT NULL DEFAULT 0 COMMENT 'Кількість вправ на розтягування хребта',
     leg_lift_stretch INT NOT NULL DEFAULT 0 COMMENT 'Кількість піднімань ноги та розтяжки',
     scissor_twist INT NOT NULL DEFAULT 0 COMMENT 'Кількість скручувань "ножиці"',
