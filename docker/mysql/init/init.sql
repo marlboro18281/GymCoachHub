@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     age INT NOT NULL CHECK (age >= 12 AND age <= 100) COMMENT 'Вік користувача (12-100 років)',
     registration_date DATE NOT NULL COMMENT 'Дата реєстрації',
     CONSTRAINT uk_phone_number UNIQUE (phone_number)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних користувачів';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання даних користувачів';
 
 -- Таблиця user_base_measurements: базові виміри користувача (встановлюються один раз, але можуть редагуватися)
 CREATE TABLE IF NOT EXISTS user_base_measurements (
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS user_base_measurements (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата оновлення запису',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT uk_user_base UNIQUE (user_id)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання базових вимірів користувачів';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання базових вимірів користувачів';
 
 -- Таблиця user_measurements: історія вимірів ваги та зросту користувача
 CREATE TABLE IF NOT EXISTS user_measurements (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS user_measurements (
     height INT NOT NULL COMMENT 'Зріст користувача (см)',
     measurement_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата і час виміру',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання історії вимірів користувачів';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання історії вимірів користувачів';
 
 -- Таблиця fitness: дані про фітнес-вправи
 CREATE TABLE IF NOT EXISTS fitness (
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS fitness (
     mountain_climbers INT NOT NULL DEFAULT 0 COMMENT 'Кількість вправ "альпінізм"',
     high_knee_run INT NOT NULL DEFAULT 0 COMMENT 'Кількість бігу з підняттям колін',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних про фітнес-вправи';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання даних про фітнес-вправи';
 
 -- Таблиця hardwork: дані про силові тренування
 CREATE TABLE IF NOT EXISTS hardwork (
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS hardwork (
     barbell_bench_press INT NOT NULL DEFAULT 0 COMMENT 'Кількість жиму штанги',
     dumbbell_bench_press INT NOT NULL DEFAULT 0 COMMENT 'Кількість жиму гантель',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних про силові тренування';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання даних про силові тренування';
 
 -- Таблиця pilates: дані про заняття пілатесом
 CREATE TABLE IF NOT EXISTS pilates (
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS pilates (
     basket_exercise INT NOT NULL DEFAULT 0 COMMENT 'Кількість вправ "кошик"',
     boomerang_exercise INT NOT NULL DEFAULT 0 COMMENT 'Кількість вправ "бумеранг"',
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Таблиця для зберігання даних про заняття пілатесом';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT 'Таблиця для зберігання даних про заняття пілатесом';
 
 CREATE TABLE `pilates_data` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -100,7 +100,7 @@ CREATE TABLE `pilates_data` (
     `link` VARCHAR(255) DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `pilates_data` (`data_id`, `img`, `title`, `movie`)
 VALUES
@@ -126,7 +126,7 @@ CREATE TABLE `fitness_data` (
     `link` VARCHAR(255) DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 COMMENT='Вправи фітнес для відображення на сторінці';
 
 INSERT INTO `fitness_data` (`data_id`, `img`, `title`, `movie`)
@@ -150,7 +150,7 @@ CREATE TABLE `hardwork_data` (
     `link` VARCHAR(255) DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 COMMENT='Вправи силових тренувань для відображення на сторінці';
 
 INSERT INTO `hardwork_data` (`data_id`, `img`, `title`, `movie`)
