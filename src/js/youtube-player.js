@@ -3,11 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Знаходимо всі посилання з класом .pilates-link
     const links = document.querySelectorAll('.pilates-link');
     // Знаходимо елемент модального вікна
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector('#modal-movie');
     // Знаходимо контейнер для контенту модального вікна
-    const modalContent = document.querySelector('.modal-content');
-    // Знаходимо кнопку закриття модального вікна
-    const closeBtn = document.querySelector('.close-button');
+    const modalContent = document.querySelector('#modal-movie .modal-content');
+
 
     // Для кожного посилання додаємо обробник кліку
     links.forEach(link => {
@@ -30,17 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Обробник кліку по кнопці закриття модального вікна
-    closeBtn.addEventListener('click', () => {
-        modalContent.innerHTML = ''; // Очищаємо контент модального вікна
-        modal.style.display = 'none'; // Ховаємо модальне вікно
-    });
-
     // Обробник кліку поза модальним вікном для його закриття
     window.addEventListener('click', e => {
         if (e.target === modal) {
             modalContent.innerHTML = ''; // Очищаємо контент модального вікна
             modal.style.display = 'none'; // Ховаємо модальне вікно
         }
+        console.log(e.target);
     });
 });

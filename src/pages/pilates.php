@@ -28,6 +28,7 @@
                         </div>
 
                         <?php include '../components/modal.php'; ?>
+                        <?php include '../components/modal-movie.php'; ?>
 
                         <section class="pilates">
                             <?php
