@@ -1,6 +1,42 @@
 -- Видаляємо старі таблиці, якщо вони існують
 DROP TABLE IF EXISTS fitness, hardwork, pilates, users;
 
+CREATE TABLE `pilates_data` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `data_id` VARCHAR(50) NOT NULL,
+  `movie` VARCHAR(255) DEFAULT NULL,
+  `img` VARCHAR(255) NOT NULL,
+  `link` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Вправи пілатес для відображення на сторінці';
+
+CREATE TABLE `hardwork_data` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `data_id` VARCHAR(50) NOT NULL,
+    `img` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `movie` VARCHAR(255) DEFAULT NULL,
+    `link` VARCHAR(255) DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Вправи силових тренувань для відображення на сторінці';
+
+CREATE TABLE `fitness_data` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `data_id` VARCHAR(50) NOT NULL,
+  `img` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `movie` VARCHAR(255) DEFAULT NULL,
+  `link` VARCHAR(255) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+COMMENT='Вправи фітнес для відображення на сторінці';
+
 -- Таблиця users: інформація про користувачів
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Унікальний ідентифікатор користувача',

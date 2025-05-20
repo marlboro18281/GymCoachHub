@@ -82,8 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const data = await response.json();
-            return data;
+            return  await response.json();
         } catch (err) {
             const text = await response.text();
             console.error("Помилка парсингу JSON. Текст відповіді:", text);
@@ -155,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Збереження вправ
             console.log("Відправка запиту до save_exercise.php...");
 
-            const saveResponse = await fetch("/save_exercise.php", {
+            const saveResponse = await fetch("/src/pages/save-exercise.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: dataBody
