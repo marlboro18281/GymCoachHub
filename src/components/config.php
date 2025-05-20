@@ -14,12 +14,12 @@ error_reporting(E_ALL);
 //$mysqli = new mysqli("localhost", "root", "", "db_sport");
 // Docker database connection
 $mysqli = new mysqli("mysql", "root", "rootpassword", "db_sport");
+// Set the character encoding
+$mysqli->set_charset("utf8mb4");
+
 if ($mysqli->connect_errno) {
     header("Content-Type: application/json; charset=utf-8");
     echo json_encode(["status" => "error", "message" => "Помилка підключення до БД: " . $mysqli->connect_error], JSON_UNESCAPED_UNICODE);
     exit;
 }
-
-// Set the character encoding
-$mysqli->set_charset("utf8mb4");
 ?>

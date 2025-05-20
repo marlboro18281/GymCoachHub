@@ -44,6 +44,8 @@ services:
    MYSQL_USER: dbuser
       # Пароль користувача.
    MYSQL_PASSWORD: rootpassword
+   MYSQL_CHARSET: utf8mb4
+   MYSQL_COLLATION: utf8mb4_general_ci
     # ports: Проксірування порту 3306.
   ports:
    - "3306:3306"
@@ -54,7 +56,7 @@ services:
       # Ініціалізаційні скрипти.
    - ./docker/mysql/init:/docker-entrypoint-initdb.d
     # command: Додаткові параметри запуску MySQL.
-  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-authentication-plugin=mysql_native_password --init-connect='SET NAMES utf8mb4;'
     # networks: Підключення до мережі app-network.
   networks:
    - app-network
